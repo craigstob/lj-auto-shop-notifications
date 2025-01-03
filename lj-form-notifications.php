@@ -16,8 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Check if Gravity Forms is active by checking if GFForms class exists
 if ( ! class_exists( 'GFForms' ) ) {
-	// Deactivate the plugin if Gravity Forms is not active
-	deactivate_plugins( plugin_basename( __FILE__ ) );
+
+    add_action('admin_init', function () {
+	    // Deactivate the plugin if Gravity Forms is not active
+	    deactivate_plugins( plugin_basename( __FILE__ ) );
+    });
 
 	// Add an admin notice
 	add_action( 'admin_notices', function () {
