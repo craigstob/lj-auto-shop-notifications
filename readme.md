@@ -29,6 +29,10 @@ plugin templates them for scalability and maintainability. In order to get start
 // Use your form id and replace x with it 'input_x_7'
 ```
 
+12. Replace the company logo.  You can either:
+    * Replace the $company_logo_path in the php with the path to your image, OR
+    * Replace the 'company-logo.jpg' file in the root folder of this plugin
+
 ## Setting the Coupon ID field
 
 This is up to you how to dynamically set this field. However this plugin comes equipped to look for a URL hash (\#coupon). For

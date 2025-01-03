@@ -165,9 +165,9 @@ class LJNotifications {
 		$coupon            = $coupons[ $coupon_id ];
 		$email_title       = apply_filters( 'lj_form_notifications_email_title', $coupon['email_title'], $coupon );
 		$price             = apply_filters( 'lj_form_notifications_price', $coupon['price'], $coupon );
-		$company_logo_path = apply_filters( 'lj_notification_logo_path', plugin_dir_url( __FILE__ ) . 'company-logo.png' );
+		$company_logo_path = apply_filters( 'lj_notification_logo_path', plugin_dir_url( __FILE__ ) . 'company-logo.jpg' );
 
-		$to      = 'chuck@mrwpress.com'; // Set your admin emails here
+		$to      = 'chucka@localjungle.com'; // Set your admin emails here
 		$subject = $coupon['subject'];
 		$from    = 'noreply@localjungle.com'; // Set this accordingly
 		$message = <<<MESSAGE
@@ -270,7 +270,7 @@ MESSAGE;
 		$headers = apply_filters( 'lj_form_notifications_admin_headers', $headers, $fields, $coupon, $form, $entry );
 
 		// Send the Administrator Message
-		wp_mail( $to, $subject, $admin_message, $headers );
+		$send = wp_mail( $to, $subject, $admin_message, $headers );
 
 		$headers   = [];
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';
