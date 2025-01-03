@@ -33,6 +33,14 @@ plugin templates them for scalability and maintainability. In order to get start
     * Replace the $company_logo_path in the php with the path to your image, OR
     * Replace the 'company-logo.jpg' file in the root folder of this plugin
 
+13. The proper 'From' address should be set in this block of code here:
+
+```php
+		$to      = 'craig@localjungle.com'; // Set your admin emails here
+		$subject = $coupon['subject'];
+		$from    = 'noreply@localjungle.com'; // Set this accordingly
+```
+
 ## Setting the Coupon ID field
 
 This is up to you how to dynamically set this field. However this plugin comes equipped to look for a URL hash (\#coupon). For

@@ -167,7 +167,7 @@ class LJNotifications {
 		$price             = apply_filters( 'lj_form_notifications_price', $coupon['price'], $coupon );
 		$company_logo_path = apply_filters( 'lj_notification_logo_path', plugin_dir_url( __FILE__ ) . 'company-logo.jpg' );
 
-		$to      = 'chucka@localjungle.com'; // Set your admin emails here
+		$to      = 'craig@localjungle.com'; // Set your admin emails here
 		$subject = $coupon['subject'];
 		$from    = 'noreply@localjungle.com'; // Set this accordingly
 		$message = <<<MESSAGE
