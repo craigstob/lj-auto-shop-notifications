@@ -17,10 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Check if Gravity Forms is active by checking if GFForms class exists
 if ( ! class_exists( 'GFForms' ) ) {
 
-    add_action('admin_init', function () {
-	    // Deactivate the plugin if Gravity Forms is not active
-	    deactivate_plugins( plugin_basename( __FILE__ ) );
-    });
+	add_action( 'admin_init', function () {
+		// Deactivate the plugin if Gravity Forms is not active
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+	} );
 
 	// Add an admin notice
 	add_action( 'admin_notices', function () {
@@ -44,14 +44,13 @@ class LJNotifications {
 	}
 
 	public function coupon_forms() {
-		$form_ids = [ 1 ];
+		$form_ids = [ 2 ]; // Set the coupon form(s)
 
 		return apply_filters( 'lj_notifications_form_ids', $form_ids );
 	}
 
 	public function gform_after_submission( $entry, $form ) {
-		$id = 1; // Coupon form ID
-		$id = apply_filters( "lj_notifications_form_id", $id, $form );
+		$id = apply_filters( "lj_notifications_form_id", $form['id'], $form );
 		if ( ! in_array( $id, $this->couponForms ) ) {
 			return;
 		}
@@ -62,8 +61,8 @@ class LJNotifications {
 			'name'        => rgar( $entry, '1' ),
 			'email'       => rgar( $entry, '3' ),
 			'phone'       => rgar( $entry, '4' ),
-			'coupon_id'   => rgar( $entry, '7' ),
-			'expiry_date' => rgar( $entry, '9' )
+			'coupon_id'   => rgar( $entry, '6' ),
+			'expiry_date' => rgar( $entry, '7' )
 		];
 
 		do_action( "lj_notifications_before_fields_filter", $id, $form );
@@ -75,71 +74,76 @@ class LJNotifications {
 		// These keys are from the form input #7
 		$coupons = [
 			'coupon-bmw-oil-change'        => [
-				'subject'     => 'BMW Oil Change Coupon',
-				'email_title' => 'PREMIUM BMW OIL CHANGE',
-				'price'       => '$74.97'
+				'subject'     => 'BMW FULL SYNTHETIC OIL SERVICE',
+				'email_title' => 'BMW FULL SYNTHETIC OIL SERVICE',
+				'price'       => '$44.97'
 			],
-			'coupon-level-one-diagnostic'  => [
-				'subject'     => 'LEVEL ONE DIAGNOSTIC',
-				'email_title' => 'LEVEL ONE DIAGNOSTIC',
-				'price'       => 'Free!'
-			],
+//			'coupon-level-one-diagnostic'  => [
+//				'subject'     => 'LEVEL ONE DIAGNOSTIC',
+//				'email_title' => 'LEVEL ONE DIAGNOSTIC',
+//				'price'       => 'Free!'
+//			],
 			'coupon-audi-oil-change'       => [
 				'subject'     => 'Audi Oil Change Coupon',
 				'email_title' => 'PREMIUM AUDI OIL CHANGE',
-				'price'       => '$74.97'
+				'price'       => '$44.97'
 			],
-			'coupon-jaguar-oil-change'     => [
-				'subject'     => 'Jaguar Oil Change Coupon',
-				'email_title' => 'PREMIUM JAGUAR OIL CHANGE',
-				'price'       => '$74.97'
-			],
+//			'coupon-jaguar-oil-change'     => [
+//				'subject'     => 'Jaguar Oil Change Coupon',
+//				'email_title' => 'PREMIUM JAGUAR OIL CHANGE',
+//				'price'       => '$74.97'
+//			],
 			'coupon-landrover-oil-change'  => [
 				'subject'     => 'Land Rover Oil Change Coupon',
 				'email_title' => 'PREMIUM LAND ROVER OIL CHANGE',
-				'price'       => '$74.97'
+				'price'       => '$44.97'
 			],
 			'coupon-mini-oil-change'       => [
 				'subject'     => 'Mini Oil Change Coupon',
 				'email_title' => 'PREMIUM MINI OIL CHANGE',
-				'price'       => '$74.97'
+				'price'       => '$44.97'
 			],
-			'coupon-mercedes-a-b-service'  => [
+			'coupon-mercedes-a-b'          => [
 				'subject'     => 'Mercedes A & B Service',
-				'email_title' => 'MERCEDES A &amp; B SERVICE',
-				'price'       => [ 'service_a' => '$297', 'service_b' => '$697' ]
+				'email_title' => 'MERCEDES A & B SERVICE',
+				'price'       => [ 'service_a' => '$177', 'service_b' => '$377' ]
 			],
 			'coupon-porsche-oil-change'    => [
 				'subject'     => 'Porsche Oil Change Coupon',
-				'email_title' => 'PORSCHE REPAIR OR OIL CHANGE',
-				'price'       => '$100 OFF'
+				'email_title' => 'PREMIUM PORSCHE OIL CHANGE',
+				'price'       => '$44.97'
 			],
 			'coupon-volkswagen-oil-change' => [
 				'subject'     => 'Volkswagen Oil Change Coupon',
 				'email_title' => 'PREMIUM VOLKSWAGEN OIL CHANGE',
-				'price'       => '$74.97'
+				'price'       => '$44.97'
 			],
-			'coupon-volvo-oil-change'      => [
-				'subject'     => 'Volvo Oil Change Coupon',
-				'email_title' => 'PREMIUM VOLVO OIL CHANGE',
-				'price'       => '$74.97'
+			'coupon-mercedes-oil-change' => [
+				'subject'     => 'Mercedes Oil Change Coupon',
+				'email_title' => 'PREMIUM MERCEDES OIL CHANGE',
+				'price'       => '$44.97'
 			],
-			'coupon-european-oil-change'   => [
-				'subject'     => 'European Oil Change Coupon',
-				'email_title' => 'PREMIUM EUROPEAN OIL CHANGE',
-				'price'       => '$74.97'
-			],
-			'coupon-exotics-oil-change'    => [
-				'subject'     => 'Premium Exotics Oil Change Coupon',
-				'email_title' => 'PREMIUM EXOTICS OIL CHANGE',
-				'price'       => '$100 OFF'
-			],
-			'coupon-german-oil-change'     => [
-				'subject'     => 'German Oil Change Coupon',
-				'email_title' => 'PREMIUM GERMAN OIL CHANGE',
-				'price'       => '$74.97'
-			],
-			'coupon-20-off-dealer-quote'   => [
+//			'coupon-volvo-oil-change'      => [
+//				'subject'     => 'Volvo Oil Change Coupon',
+//				'email_title' => 'PREMIUM VOLVO OIL CHANGE',
+//				'price'       => '$74.97'
+//			],
+//			'coupon-european-oil-change'   => [
+//				'subject'     => 'European Oil Change Coupon',
+//				'email_title' => 'PREMIUM EUROPEAN OIL CHANGE',
+//				'price'       => '$74.97'
+//			],
+//			'coupon-exotics-oil-change'    => [
+//				'subject'     => 'Premium Exotics Oil Change Coupon',
+//				'email_title' => 'PREMIUM EXOTICS OIL CHANGE',
+//				'price'       => '$100 OFF'
+//			],
+//			'coupon-german-oil-change'     => [
+//				'subject'     => 'German Oil Change Coupon',
+//				'email_title' => 'PREMIUM GERMAN OIL CHANGE',
+//				'price'       => '$74.97'
+//			],
+			'coupon-20-off-dealer'         => [
 				'subject'     => '20% OFF DEALER QUOTE',
 				'email_title' => '20% OFF DEALER QUOTE',
 				'price'       => ''
@@ -167,7 +171,8 @@ class LJNotifications {
 		$price             = apply_filters( 'lj_form_notifications_price', $coupon['price'], $coupon );
 		$company_logo_path = apply_filters( 'lj_notification_logo_path', plugin_dir_url( __FILE__ ) . 'company-logo.jpg' );
 
-		$to      = 'craig@localjungle.com'; // Set your admin emails here
+//		$to      = 'craig@localjungle.com'; // Set your admin emails here
+		$to      = 'chucka@localjungle.com';
 		$subject = $coupon['subject'];
 		$from    = 'noreply@localjungle.com'; // Set this accordingly
 		$message = <<<MESSAGE
@@ -180,7 +185,7 @@ MESSAGE;
 
 		// Does it have a price
 		if ( ! empty( $price ) ) {
-			if ( 'coupon-mercedes-a-b-service' == $coupon_id ) {
+			if ( 'coupon-mercedes-a-b' == $coupon_id ) {
 				$message .= <<<MESSAGE
 <h3 style="color: #0296ff !important; font-size: 30px; font-weight: bold; text-transform: uppercase; margin: 15px 0;">{$coupon['price']['service_a']} <span style="color: #000;">SERVICE A</span></h3>
 <h3 style="color: #0296ff !important; font-size: 30px; font-weight: bold; text-transform: uppercase; margin: 0; line-height: 30px;">{$coupon['price']['service_b']} <span style="color: #000;">SERVICE B</span></h3>
@@ -203,7 +208,7 @@ MESSAGE;
 <p style="font-size: 15px; color: #000; line-height: 22px;"><span style="color: #32b0ff; margin-right: 5px;">✔</span>All Fluid Level Checks &amp; Corrections</p>
 <p style="font-size: 15px; color: #000; line-height: 22px;"><span style="color: #32b0ff; margin-right: 5px;">✔</span>Safety Inspection</p>
 <p style="font-size: 15px; color: #000; line-height: 22px;"><span style="color: #32b0ff; margin-right: 5px;">✔</span>Reset Maintenance Light/Counter</p>
-<p style="font-size: 13px; color: #000; line-height: 16px;">* Coupon applies to most Euro cars. Tax and disposal fee extra. Cannot combine with any other offers. No Dealers. Expires {$fields['expiry_date']}.</p>
+<p style="font-size: 13px; color: #000; line-height: 16px;">* Up to 5 qts. oil, small extra cost for more oil. Tax and disposal fee extra. Cannot combine with any other offers. Limited time only.</p>
 
 </div>
 MESSAGE;
@@ -227,11 +232,11 @@ MESSAGE;
 		}
 
 		// Is this the 20 off dealer quote
-		if ( 'coupon-20-off-dealer-quote' == $coupon_id ) {
+		if ( 'coupon-20-off-dealer' == $coupon_id ) {
 			$message .= <<<MESSAGE
 <div>
-<p style="font-size: 15px; color: #000; line-height: 22px;"><span style="color: #32b0ff; margin-right: 5px;">✔</span>Bring Us Your Dealership Quote And We Will Beat It By 20%</p>
-<p style="font-size: 13px; color: #000; line-height: 16px;">* Written itemized quotes only. Excludes engines, transmissions, tires and certain other repairs. Limit $1,000 off. Please call for details. Cannot combine with any other offers. Expires {$fields['expiry_date']}.</p>
+<p style="font-size: 15px; color: #000; line-height: 22px;"><span style="color: #32b0ff; margin-right: 5px;">✔</span>Bring Us Your Dealership Quote, And We Will Beat It By 20%</p>
+<p style="font-size: 13px; color: #000; line-height: 16px;">* Written quotes only. Excludes engine replacements, transmission replacements, tires, batteries, and other exclusions apply. Call for details. Limit $1,000 off. Cannot combine with any other offers.</p>
 </div>
 MESSAGE;
 
@@ -244,7 +249,7 @@ MESSAGE;
 </div>
 <div style="text-decoration: none; color: #000; margin: 15px 0;" title="Call {$site_name}">
 
-Call: <strong style="color: #1997d4;">954-767-6837</strong>
+Call: <strong style="color: #1997d4;">630-281-4100</strong>
 <div style="margin: 15px 5px;"><a title="{$site_name}" href="{$site_url}" target="_blank" rel="noopener"><img style="width: 200px;" src="{$company_logo_path}" alt="{$site_name}" /></a></div>
 </div>
 MESSAGE;
@@ -293,17 +298,13 @@ MESSAGE;
 
 	public function get_oil_coupons() {
 		return [
-			'coupon-porsche-oil-change',
-			'coupon-volkswagen-oil-change',
-			'coupon-volvo-oil-change',
-			'coupon-european-oil-change',
-			'coupon-exotics-oil-change',
-			'coupon-german-oil-change',
 			'coupon-audi-oil-change',
-			'coupon-jaguar-oil-change',
+			'coupon-bmw-oil-change',
 			'coupon-landrover-oil-change',
 			'coupon-mini-oil-change',
-			'coupon-bmw-oil-change'
+			'coupon-porsche-oil-change',
+			'coupon-volkswagen-oil-change',
+            'coupon-mercedes-oil-change'
 		];
 	}
 
